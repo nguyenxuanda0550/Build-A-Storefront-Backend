@@ -12,7 +12,7 @@ const {
     ENV,
 } = process.env
 
-let client
+let client = new Pool;
 
 if (ENV === 'test') {
     client = new Pool({

@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv'
 import orderRoutes from './handlers/order'
+import productRoutes from './handlers/product'
 import userRoutes from './handlers/user'
 
 const app: express.Application = express()
@@ -19,6 +20,7 @@ app.get('/', function (req: Request, res: Response) {
 
 orderRoutes(app)
 userRoutes(app)
+productRoutes(app)
 
 app.listen(3000, function () {
     console.log(`starting app on: ${address}`)

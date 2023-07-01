@@ -1,5 +1,14 @@
-A reviewer must be able to follow the steps listed in the README.md to start the project. It should contain the following:
 
-how to setup and connect to the database
-what ports the backend and database are running on
-package installation instructions
+npm install
+npm run watch
+
+#Environment variable
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=shopping
+POSTGRES_TEST_DB=shopping_test
+POSTGRES_USER=shopping_user
+POSTGRES_PASSWORD=password123
+ENV=dev
+TOKEN_SECRET=danguyen123
+BCRYPT_PASSWORD=nguyenxuanda12345
+SALT_ROUNDS=10

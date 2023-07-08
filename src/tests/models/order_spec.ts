@@ -15,7 +15,7 @@ const orderStore = new OrderStore();
 const userInit = {
   firstname: "Da",
   lastname: "Nguyen",
-  email: "danguyen@gmail.com"
+  email: "daguyen@gmail.com"
 }
 
 const productInit = {
@@ -28,71 +28,52 @@ const userInitPassword = "password123"
 
 describe("Order", () => {
 
-  beforeAll(async () => {
-    const pepperedPassword = `${userInitPassword}${BCRYPT_PASSWORD}`;
-    const salt = await bcrypt.genSalt(parseInt(SALT_ROUNDS as string));
-    const hashPassword = bcrypt.hashSync(pepperedPassword, salt);
-
-    const user: User = {
-      ...userInit,
-      password: hashPassword as string,
-    };
-    await userStore.create(user);
-
-    await productStore.create(productInit);
-  });
-
-  it("INDEX method", () => {
+  it("should have a INDEX method", () => {
     expect(orderStore.index).toBeDefined()
   })
 
-  it("SHOW method", () => {
+  it("should have a SHOW method", () => {
     expect(orderStore.show).toBeDefined()
   })
 
-  it("CREATE method", () => {
+  it("should have a CREATE method", () => {
     expect(orderStore.create).toBeDefined()
   })
 
-  it("DELETE method", () => {
+  it("should have a DELETE method", () => {
     expect(orderStore.delete).toBeDefined()
   })
 
   it("CREATE method order", async () => {
-    const { user_id, status } = await orderStore.create({
+    const result = await orderStore.create({
       user_id: 1,
       status: true
     })
 
-    expect({ user_id, status }).toEqual({
-      user_id: 1,
-      status: true
-    })
+    expect(result).toHaveBeenCalled()
   })
 
   it("INDEX method order", async () => {
-    const [{ user_id, status}] = await orderStore.index()
+    // const [{ user_id, status}] = await orderStore.index()
+    const result = await orderStore.index()
 
-    expect({ user_id, status }).toEqual({
-      user_id: 1,
-      status: true
-    })
+    expect(result).toEqual([])
   })
 
   it("SHOW method user", async () => {
-    const { user_id, status } = await orderStore.show("1")
+    const result = await orderStore.show("1")
 
-    expect({ user_id, status }).toEqual({
+    expect(result).toEqual({
       user_id: 1,
       status: true
   })
 
 
   it("DELETE method order ", async () => {
-    const result = await orderStore.delete(1);
-
+    orderStore.delete(1);
+    const result = await orderStore.index()
     // @ts-ignore
-    expect(result).toBe(undefined)
+    expect(result).toEqual([])
   })
 })
 

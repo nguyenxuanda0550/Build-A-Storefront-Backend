@@ -1,7 +1,5 @@
 import Client from '../database'
 
-// const client = require("./../database")
-
 export type Order_Products = {
     product_id: number;
     order_id: number;

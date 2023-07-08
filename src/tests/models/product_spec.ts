@@ -4,30 +4,30 @@ const Store = new ProductStore();
 
 describe("Product", () => {
 
-  it("INDEX method", () => {
+  it("should have an INDEX method", () => {
     expect(Store.index).toBeDefined()
   })
 
-  it("SHOW method", () => {
+  it("should have an SHOW method", () => {
     expect(Store.show).toBeDefined()
   })
 
-  it("CREATE method", () => {
+  it("should have an CREATE method", () => {
     expect(Store.create).toBeDefined()
   })
 
-  it("DELETE method", () => {
+  it("should have an DELETE method", () => {
     expect(Store.delete).toBeDefined()
   })
 
   it("CREATE method product", async () => {
-    const { name, price, category } = await Store.create({
+    const result = await Store.create({
       name:'book',
       price: 5,
       category: 'learning equipment'
     })
 
-    expect({ name, price, category }).toEqual({
+    expect(result).toEqual({
       name:'book',
       price: 5,
       category: 'learning equipment'
@@ -35,19 +35,19 @@ describe("Product", () => {
   })
 
   it("INDEX method product", async () => {
-    const [{ name, price, category}] = await Store.index()
+    const result = await Store.index()
 
-    expect({ name, price, category }).toEqual({
-      name:'book',
+    expect(result).toEqual([{
+      name: "book",
       price: 5,
       category: 'learning equipment'
-    })
+    }])
   })
 
   it("SHOW method product", async () => {
-    const { name, price, category } = await Store.show("1")
+    const result = await Store.show("1")
 
-    expect({ name, price, category }).toEqual({
+    expect(result).toEqual({
       name: 'book',
       price: 5,
       category: 'learning equipment'
@@ -55,10 +55,10 @@ describe("Product", () => {
 
 
   it("DELETE method product ", async () => {
-    const result = await Store.delete('1');
-
+    Store.delete('1');
+    const result = await Store.index()
     // @ts-ignore
-    expect(result).toBe(undefined)
+    expect(result).toEqual([])
   })
 })
 

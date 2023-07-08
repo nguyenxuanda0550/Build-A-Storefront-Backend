@@ -1,12 +1,13 @@
 import Client from '../database'
 import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
 
 export type User = {
     firstname: string,
     lastname: string,
     email:string,
     password: string,
-}
+};
 
 export class UserStore {
     async create(u: User): Promise<User> {
@@ -15,8 +16,8 @@ export class UserStore {
             const sql = 'INSERT INTO users (firstname, lastname, email, password) VALUES($1, $2, $3, $4)'
             const hash = bcrypt.hashSync(
                 u.password + process.env.BCRYPT_PASSWORD, 
-                parseInt(process.env.SALT_ROUNDS as string)
-             );
+                parseInt(process.env.SALT_ROUNDS as string) 
+             ) as string;
             const result = await conn.query(sql, [u.firstname, u.lastname, u.email, hash])
             const user = result.rows[0]
             conn.release()

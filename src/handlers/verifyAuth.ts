@@ -11,19 +11,21 @@ export const getTokenByUser = (user: User) => {
   return jwt.sign({ user }, TOKEN_SECRET as string);
 };
 
-const verifyAuthToken = (req: Request, res: Response, next: Function) => {
+const verifyAuthToken = (req: Request, res: Response, next: any) => {
   try {
     const authorizationHeader = req.headers.authorization
     const token = authorizationHeader?.split(' ')[1]
+    console.log(token)
+    console.log(authorizationHeader)
     if ( !token ) {
       return res.status(401).send('Token invalid')
     }
-    jwt.verify(token, TOKEN_SECRET as string);
-    next();
+    jwt.verify(token, TOKEN_SECRET as string)
+    next()
   } catch (err) {
-    res.status(400).send('Access denied, invalid token');
-    return;
+    res.status(400).send('Access denied, invalid token')
+    return
   }
 };
 
-export default verifyAuthToken;
+export default verifyAuthToken

@@ -34,8 +34,11 @@ email
 password
 
 Orders
-id
-id of each product in the order
-quantity of each product
 user_id
 status of order (true or false)
+
+
+Order_Products
+product_id
+order_id
+quantity

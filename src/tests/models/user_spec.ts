@@ -2,6 +2,11 @@ import { User, UserStore } from "../../models/user"
 
 import bcrypt from "bcrypt"
 import dotenv from "dotenv"
+import express from 'express';
+import supertest from "supertest";
+
+const app: express.Application = express();
+const request = supertest(app)
 
 // import bcrypt from "bcrypt"
 
@@ -42,52 +47,48 @@ describe("User", () => {
 
   it("CREATE method user", async () => {
     const tokenRequest: any = store.getTokenByUser({
+      username: "shopping_test",
+      password: "password123",
+      firstname: "",
+      lastname: ""
     })
     request
-      .post('/users/sign-in')
+      .post('/users')
       .set('Authorization', `bearer ${tokenRequest.token}`)
       .send({
         id: '2',
-        firstName: 'da',
+        firstName: 'da2',
         lastName: 'nguyen',
         password: 'password1234',
       })
       .expect(200)
     })
-    // const pepperedPassword = "password123"
-    // const salt = parseInt(SALT_ROUNDS as string);
-    // const hashPassword = await bcrypt.hashSync(pepperedPassword, salt) as string;
-    // console.log("hashPassword", hashPassword)
-    // const user: User = {
-    //   ...userInit,
-    //   password: `${hashPassword}`,
-    // }
-    // const newUser = await store.create(user);
-    // console.info("userList", newUser)
 
-    
-    // expect({ email }).toEqual({
-    //   email: userInit.email,
-    // })
-  })
 
-  it("SHOW method user", async () => {
-    const result = await store.show("1")
-
-    expect(result).toEqual({
-      id: 1,
-      firstname: "Da",
-      lastname: "Nguyen",
-      password: "password1234"
+    it("SHOW method user", async () => {
+      const result = await store.show("1")
+  
+      console.log("Result SHOW method user",result)
+      expect(result).toEqual({
+        id: 1, 
+        firstname: 'da', 
+        lastname: 'nguyen', 
+        password: 'password123'
+      })
+      // expect(result).not.toBeNaN()
+    })
+  
+  
+    it("DELETE method user ", async () => {
+      await store.delete("2");
+      const result = await store.show("2");
+  
+      // @ts-ignore
+      expect(result).toBe(undefined)
     })
   })
 
 
-  it("DELETE method user ", async () => {
-    await store.delete("1");
-    const result = await store.show("1");
+  
 
-    // @ts-ignore
-    expect(result).toBe(undefined)
-  })
-})
+

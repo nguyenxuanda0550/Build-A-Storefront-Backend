@@ -6,8 +6,14 @@ import verifyAuthToken from './verifyAuth'
 const store = new ProductStore()
 
 const index = async (req: Request, res: Response) => {
-    const products = await store.index()
-    res.json(products)
+    try {
+        const products = await store.index()
+        res.status(200).json(products)   
+    } catch (err) {
+        res.status(400)
+        res.json(err)
+    }
+   
 }
 
 const showProduct = async (req: Request, res: Response) => {

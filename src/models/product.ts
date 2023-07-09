@@ -1,4 +1,4 @@
-const Client = require('../database')
+import Client from '../database'
 
 export type Product = {
     id?: any,

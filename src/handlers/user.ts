@@ -1,6 +1,7 @@
 import { User, UserStore } from '../models/user'
 import express, { Request, Response } from 'express'
-import verifyAuthToken, { getTokenByUser } from './verifyAuth';
+
+import verifyAuthToken from './verifyAuth';
 
 const store = new UserStore()
 
@@ -18,7 +19,6 @@ const createUser = async (req: Request, res: Response) => {
     const user: User = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        email:req.body.email,
         password: req.body.password
     }
     const users = await store.create(user);
@@ -43,7 +43,6 @@ const authenticate = async (req: Request, res: Response) => {
       if (!user) {
         return res.status(401).send(`Password incorrect for user ${username}.`);
       }
-      res.json(getTokenByUser(user));
     } catch (err) {
       res.status(400).json(err);
     }

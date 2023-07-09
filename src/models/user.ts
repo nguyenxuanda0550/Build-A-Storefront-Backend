@@ -1,24 +1,30 @@
 import Client from '../database'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
+import jwt from "jsonwebtoken";
+
+dotenv.config();
+const { TOKEN_SECRET } = process.env
 
 export type User = {
+    id?: any,
     firstname: string,
     lastname: string,
-    email:string,
+    username?: string,
     password: string,
 };
+  
 
 export class UserStore {
+    getTokenByUser = (user: User) => {
+        return jwt.sign({ UserName: user.username, password: user.password }, TOKEN_SECRET as string);
+      };
+
     async create(u: User): Promise<User> {
         try {
             const conn = await Client.connect()
-            const sql = 'INSERT INTO users (firstname, lastname, email, password) VALUES($1, $2, $3, $4)'
-            const hash = bcrypt.hashSync(
-                u.password + process.env.BCRYPT_PASSWORD, 
-                parseInt(process.env.SALT_ROUNDS as string) 
-             ) as string;
-            const result = await conn.query(sql, [u.firstname, u.lastname, u.email, hash])
+            const sql = 'INSERT INTO users (firstname, lastname, password) VALUES($1, $2, $3)'
+            const result = await conn.query(sql, [u.firstname, u.lastname, u.password])
             const user = result.rows[0]
             conn.release()
             return user

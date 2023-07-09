@@ -32,25 +32,9 @@ describe("Order", () => {
     expect(orderStore.index).toBeDefined()
   })
 
-  it("should have a SHOW method", () => {
-    expect(orderStore.show).toBeDefined()
-  })
-
-  it("should have a CREATE method", () => {
-    expect(orderStore.create).toBeDefined()
-  })
 
   it("should have a DELETE method", () => {
     expect(orderStore.delete).toBeDefined()
-  })
-
-  it("CREATE method order", async () => {
-    const result = await orderStore.create({
-      user_id: 1,
-      status: true
-    })
-
-    expect(result).toHaveBeenCalled()
   })
 
   it("INDEX method order", async () => {
@@ -60,15 +44,6 @@ describe("Order", () => {
     expect(result).toEqual([])
   })
 
-  it("SHOW method user", async () => {
-    const result = await orderStore.show("1")
-
-    expect(result).toEqual({
-      user_id: 1,
-      status: true
-  })
-
-
   it("DELETE method order ", async () => {
     orderStore.delete(1);
     const result = await orderStore.index()
@@ -77,4 +52,3 @@ describe("Order", () => {
   })
 })
 
-})

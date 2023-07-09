@@ -30,15 +30,15 @@ User
 id
 firstname
 lastname
-email
 password
 
 Orders
+id
 user_id
-status of order (true or false)
 
 
 Order_Products
+id
 product_id
 order_id
 quantity

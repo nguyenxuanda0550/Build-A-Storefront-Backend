@@ -7,10 +7,6 @@ import jwt from "jsonwebtoken"
 dotenv.config();
 const { TOKEN_SECRET } = process.env
 
-export const getTokenByUser = (user: User) => {
-  return jwt.sign({ user }, TOKEN_SECRET as string);
-};
-
 const verifyAuthToken = (req: Request, res: Response, next: any) => {
   try {
     const authorizationHeader = req.headers.authorization

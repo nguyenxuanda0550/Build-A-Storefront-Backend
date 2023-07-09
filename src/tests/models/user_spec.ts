@@ -13,8 +13,7 @@ const store = new UserStore()
 
 const userInit = {
   firstname: "Da",
-  lastname: "Nguyen",
-  email: "danguyen@gmail.com"
+  lastname: "Nguyen"
 }
 
 const userInitPassword = "password123"
@@ -42,31 +41,46 @@ describe("User", () => {
   })
 
   it("CREATE method user", async () => {
-    const pepperedPassword = "password123"
-    const salt = await bcrypt.genSalt(parseInt(SALT_ROUNDS as string))
-    const hashPassword = await bcrypt.hashSync(pepperedPassword, salt) as string;
-    console.log("hashPassword", hashPassword)
-    const user: User = {
-      ...userInit,
-      password: hashPassword,
-    }
-    const newUser = await store.create(user);
-    console.info("userList", newUser)
+    const tokenRequest: any = store.getTokenByUser({
+    })
+    request
+      .post('/users/sign-in')
+      .set('Authorization', `bearer ${tokenRequest.token}`)
+      .send({
+        id: '2',
+        firstName: 'da',
+        lastName: 'nguyen',
+        password: 'password1234',
+      })
+      .expect(200)
+    })
+    // const pepperedPassword = "password123"
+    // const salt = parseInt(SALT_ROUNDS as string);
+    // const hashPassword = await bcrypt.hashSync(pepperedPassword, salt) as string;
+    // console.log("hashPassword", hashPassword)
+    // const user: User = {
+    //   ...userInit,
+    //   password: `${hashPassword}`,
+    // }
+    // const newUser = await store.create(user);
+    // console.info("userList", newUser)
+
+    
     // expect({ email }).toEqual({
     //   email: userInit.email,
     // })
   })
 
-  // it("SHOW method user", async () => {
-  //   const result = await store.show("1")
+  it("SHOW method user", async () => {
+    const result = await store.show("1")
 
-  //   expect(result).toEqual({
-  //     firstname: "Da",
-  //     lastname: "Nguyen",
-  //     email: "danguyen@gmail.com",
-  //     password: hashPassword
-  //   })
-  // })
+    expect(result).toEqual({
+      id: 1,
+      firstname: "Da",
+      lastname: "Nguyen",
+      password: "password1234"
+    })
+  })
 
 
   it("DELETE method user ", async () => {

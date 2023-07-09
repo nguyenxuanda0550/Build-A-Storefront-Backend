@@ -1,6 +1,7 @@
 const Client = require('../database')
 
 export type Product = {
+    id?: any,
     name: string,
     price: number,
     category: string

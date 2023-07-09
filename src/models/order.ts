@@ -1,30 +1,19 @@
 import Client from '../database'
 
 export type Order_Products = {
+    id?: any;
     product_id: number;
     order_id: number;
     quantity: number;
 }
 
 export type Order = {
+    id?: any;
     user_id: number,
-    status: boolean
 }
 
 export class OrderStore {
-    async create(o: Order): Promise<Order> {
-        try {
-            const conn = await Client.connect()
-            const sql = 'INSERT INTO orders (user_id, status) VALUES($1, $2)'
-            const result = await conn.query(sql, [o.user_id, o.status])
-            const order = result.rows[0]
-            conn.release()
-            return order
-        } catch (error) {
-            throw new Error(`Could not add new order. Error: ${error}`)
-        }
-    }
-
+    
     async index(): Promise<Order[]> {
         try {
             const conn = await Client.connect()
@@ -34,18 +23,6 @@ export class OrderStore {
             return result.rows
         } catch (err) {
             throw new Error(`Cannot get orders ${err}`)
-        }
-    }
-
-    async show(id: string): Promise<Order> {
-        try {
-            const conn = await Client.connect()
-            const sql = 'SELECT * FROM orders WHERE id=($1)'
-            const result = await conn.query(sql, [id])
-            conn.release()
-            return result.rows[0]
-        } catch (error) {
-            throw new Error(`Count not find order ${id}. Error:${error}`)
         }
     }
 

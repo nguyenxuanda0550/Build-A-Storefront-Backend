@@ -10,11 +10,6 @@ const index = async (req: Request, res: Response) => {
     res.json(orders)
 }
 
-const deleteOrder = async (req: Request, res: Response) => {
-    const orders = await store.delete(req.body.orderId)
-    res.json(orders)
-}
-
 const createOrderProducts = async (req: Request, res: Response) => {
     const orderProducts: Order_Products = {
         product_id: (req.body.product_id),
@@ -32,7 +27,6 @@ const deleteOrderProducts = async (req: Request, res: Response) => {
 
 const orderRoutes = (app: express.Application) => {
     app.get('/orders', index)
-    app.delete('/orders',verifyAuthToken, deleteOrder)
     app.post('/orders/products', verifyAuthToken, createOrderProducts)
     app.delete('/orders/products',verifyAuthToken, deleteOrderProducts)
 }

@@ -12,12 +12,11 @@ const index = async (req: Request, res: Response) => {
     } catch (err) {
         res.status(400)
         res.json(err)
-    }
-   
+    }  
 }
 
 const showProduct = async (req: Request, res: Response) => {
-    const products = await store.show(req.body.productId)
+    const products = await store.show(req.body.productName)
     res.json(products)
 }
 
@@ -38,7 +37,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 
 const productRoutes = (app: express.Application) => {
     app.get('/products', index)
-    app.get('/products/:userId', showProduct)
+    app.get('/products/:productName', showProduct)
     app.post('/products', verifyAuthToken, createProduct)
     app.delete('/products',verifyAuthToken, deleteProduct)
 }

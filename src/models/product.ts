@@ -33,15 +33,15 @@ export class ProductStore {
         }
     }
 
-    async show(id: string): Promise<Product> {
+    async show(productName: string): Promise<Product> {
         try {
             const conn = await Client.connect()
-            const sql = 'SELECT * FROM products WHERE id=($1)'
-            const result = await conn.query(sql, [id])
+            const sql = 'SELECT * FROM products WHERE name=($1)'
+            const result = await conn.query(sql, [productName])
             conn.release()
             return result.rows[0]
         } catch (error) {
-            throw new Error(`Count not find product ${id}. Error:${error}`)
+            throw new Error(`Count not find product ${productName}. Error:${error}`)
         }
     }
 

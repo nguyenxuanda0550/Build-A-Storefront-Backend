@@ -51,23 +51,19 @@ describe("Product", () => {
   })
 
   it("SHOW method product", async () => {
-    const result = await Store.show("1")
-    console.log("result",result)
+    const result = await Store.show("book")
 
     expect(result).toEqual({
-      id: 1,
-      name: 'ca',
-      price: 23,
-      category: 'tp'
-  })
-
-
-  it("DELETE method product ", async () => {
-    Store.delete('2');
-    const result = await Store.index()
-    // @ts-ignore
-    expect(result).toEqual([])
-  })
+      id: 12,
+      name: 'book',
+      price: 5,
+      category: 'learning equipment'})
 })
 
+  it("DELETE method product ", async () => {
+    Store.delete('1');
+    const result = await Store.show("ca")
+    // @ts-ignore
+    expect(result).toBe(undefined)
+  })
 })

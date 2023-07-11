@@ -2,9 +2,9 @@ import Client from '../database'
 
 export type Order_Products = {
     id?: any;
-    product_id: number;
-    order_id: number;
-    quantity: number;
+    product_id?: number;
+    order_id?: number;
+    quantity?: number;
 }
 
 export type Order = {
@@ -23,19 +23,6 @@ export class OrderStore {
             return result.rows
         } catch (err) {
             throw new Error(`Cannot get orders ${err}`)
-        }
-    }
-
-    async delete(id: number): Promise<Order> {
-        try {
-            const conn = await Client.connect()
-            const sql = 'DELETE FROM orders WHERE id=($1)'
-            const result = await conn.query(sql, [id])
-            const order = result.rows[0]
-            conn.release()
-            return order
-        } catch (error) {
-            throw new Error(`Could not delete order ${id}. Error: ${error}`)
         }
     }
 

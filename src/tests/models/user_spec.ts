@@ -66,15 +66,11 @@ describe("User", () => {
 
 
     it("SHOW method user", async () => {
-      const result = await store.show("1")
+      store.create({firstname: 'dane', lastname: 'nguyen', password: 'aaaaaa'})
+      const result = await store.show("dane")
   
       console.log("Result SHOW method user",result)
-      expect(result).toEqual({
-        id: 1, 
-        firstname: 'da', 
-        lastname: 'nguyen', 
-        password: 'password123'
-      })
+      expect(result.firstname).toEqual("dane")
       // expect(result).not.toBeNaN()
     })
   

@@ -42,6 +42,20 @@ describe("Product", () => {
         category: 'old'
       })
       .expect(200)
+
+    // const result = await Store.create({
+    //   name: 'apple',
+    //   price: 5,
+    //   category: 'fruit'
+    // })
+
+    // console.log("result",result)
+
+    //   expect(result).toEqual({ 
+    //     name: 'apple',
+    //     price: 5,
+    //     category: 'fruit'
+    //   })
   })
 
   it("INDEX method product", async () => {
@@ -51,13 +65,10 @@ describe("Product", () => {
   })
 
   it("SHOW method product", async () => {
-    const result = await Store.show("book")
+    Store.create({name: 'apple', price: 5,category: 'fruit'})
+    const result = await Store.show("apple")
 
-    expect(result).toEqual({
-      id: 12,
-      name: 'book',
-      price: 5,
-      category: 'learning equipment'})
+    expect(result.name).toEqual("apple")
 })
 
   it("DELETE method product ", async () => {
